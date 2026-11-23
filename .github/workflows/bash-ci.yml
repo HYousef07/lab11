@@ -1,0 +1,19 @@
+name: Bash CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.sh'
+
+jobs:
+  bash-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check bash syntax with ShellCheck
+        run: |
+          shellcheck --version
+          find . -name "*.sh" -not -path "./.git/*" -print0 | xargs -0 -r shellcheck
